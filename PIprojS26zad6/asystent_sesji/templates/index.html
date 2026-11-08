@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Strona Główna - Asystent Sesji{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Witaj w Asystencie Sesji!</h1>
+    <p>Potrzebujesz motywacji przed zbliżającym się egzaminem?</p>
+    
+    <div class="card advice-card">
+        <h2>Porada Motywacyjna</h2>
+        <p id="advice-text">{% if porada %}{{ porada.tekst }}{% else %}Kliknij przycisk poniżej, aby wylosować poradę!{% endif %}</p>
+        {% if porada.kategoria %}
+            <span id="advice-category" class="badge">{{ porada.kategoria }}</span>
+        {% endif %}
+        <button id="draw-advice-btn" class="btn">Losuj poradę</button>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('draw-advice-btn').addEventListener('click', function() {
+        fetch('/api/losowa-porada/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('advice-text').innerText = data.tekst;
+                if (data.kategoria) {
+                    let catElem = document.getElementById('advice-category');
+                    if (!catElem) {
+                        catElem = document.createElement('span');
+                        catElem.id = 'advice-category';
+                        catElem.className = 'badge';
+                        document.querySelector('.advice-card').appendChild(catElem);
+                    }
+                    catElem.innerText = data.kategoria;
+                }
+            })
+            .catch(error => console.error('Błąd pobierania porady:', error));
+    });
+</script>
+{% endblock %}

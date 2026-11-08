@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kalendarz Egzaminów - Asystent Sesji{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/kalendarz.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="calendar-container">
+    <h2>Nadchodzące Egzaminy</h2>
+    
+    <table class="exam-table">
+        <thead>
+            <tr>
+                <th>Przedmiot</th>
+                <th>Data</th>
+                <th>Godzina</th>
+                <th>Miejsce</th>
+                <th>Typ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for egzamin in egzaminy %}
+            <tr>
+                <td><strong>{{ egzamin.przedmiot }}</strong></td>
+                <td>{{ egzamin.data }}</td>
+                <td>{{ egzamin.godzina }}</td>
+                <td>{{ egzamin.miejsce }}</td>
+                <td><span class="type-tag {{ egzamin.typ|lower }}">{{ egzamin.typ }}</span></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="no-data">Brak zaplanowanych egzaminów.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="form-card">
+        <h3>Dodaj nowy egzamin</h3>
+        <form method="post" action="{% url 'kalendarz' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Dodaj Egzamin</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Przesądy Przed Egzaminem - Asystent Sesji{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/przesady.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="superstitions-section">
+    <h2>Przesądy i Zwyczaje Egzaminacyjne</h2>
+    <p class="subtitle">Sprawdź, co przodkowie i starsze roczniki robili, by zapewnić sobie 5.0!</p>
+
+    <div class="grid">
+        {% for przesad in przesady %}
+        <div class="superstition-card">
+            <h3>{{ przesad.tekst }}</h3>
+            {% if przesad.opis_pochodzenia %}
+                <p class="origin"><strong>Pochodzenie:</strong> {{ przesad.opis_pochodzenia }}</p>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>Brak dostępnych przesądów w bazie.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

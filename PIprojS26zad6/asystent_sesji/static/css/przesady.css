@@ -1,0 +1,39 @@
+.superstitions-section h2 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.superstition-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 5px solid #f39c12;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.superstition-card:hover {
+    transform: translateY(-3px);
+}
+
+.superstition-card h3 {
+    font-size: 1.1rem;
+    color: #d35400;
+    margin-bottom: 0.8rem;
+}
+
+.superstition-card .origin {
+    font-size: 0.9rem;
+    color: #555;
+}
