@@ -100,6 +100,7 @@ def apiEgzaminy(request):
         elif request.content_type == "application/x-www-form-urlencoded": #obsluga danych dla url encoded
             dane = request.POST
         else:
+            print("NIEOBSLUGIWANY CONTENT-TYPE: " + request.content_type)
             return JsonResponse(False, safe=False) # nie obslugujemy innych sry bye
         
         

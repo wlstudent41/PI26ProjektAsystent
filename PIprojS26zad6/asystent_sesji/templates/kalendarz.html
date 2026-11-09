@@ -40,11 +40,86 @@
 
     <div class="form-card">
         <h3>Dodaj nowy egzamin</h3>
-        <form method="post" action="{% url 'kalendarz' %}">
+        <!-- Usunięto domyślną akcję formularza, aby przejąć obsługę przez JS -->
+        <form id="exam-form">
             {% csrf_token %}
-            {{ form.as_p }}
+            
+            <p>
+                <label for="id_przedmiot">Przedmiot:</label>
+                <input type="text" id="id_przedmiot" name="przedmiot" maxlength="200">
+            </p>
+            <p>
+                <label for="id_data">Data egzaminu:</label>
+                <input type="date" id="id_data" name="data">
+            </p>
+            <p>
+                <label for="id_godzina">Godzina egzaminu:</label>
+                <input type="time" id="id_godzina" name="godzina">
+            </p>
+            <p>
+                <label for="id_miejsce">Miejsce:</label>
+                <input type="text" id="id_miejsce" name="miejsce" maxlength="1000">
+            </p>
+            <p>
+                <label for="id_typ">Typ:</label>
+                <input type="text" id="id_typ" name="typ" maxlength="200">
+            </p>
+
             <button type="submit" class="btn-submit">Dodaj Egzamin</button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('exam-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Zatrzymuje standardowe przeładowanie strony przez formularz
+
+        const form = e.target;
+        const formData = new FormData(form);
+        
+        // Pobranie tokenu CSRF z ukrytego pola generowanego przez Django
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        
+        let newBody = {}
+        let formEPrzedmiot = formData.get("przedmiot")
+        if (formEPrzedmiot !== "") newBody["przedmiot"] = formEPrzedmiot;
+        let formEData = formData.get("data")
+        if (formEData !== "") newBody["data"] = formEData;
+        let formEGodzina = formData.get("godzina")
+        if (formEGodzina !== "") newBody["godzina"] = formEGodzina;
+        let formEMiejsce = formData.get("miejsce")
+        if (formEMiejsce !== "") newBody["miejsce"] = formEMiejsce;
+        let formETyp = formData.get("typ")
+        if (formETyp !== "") newBody["typ"] = formETyp;
+
+        fetch("{% url 'api/egzaminy' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify(newBody)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json().catch(() => ({})); // Obsługa, jeśli odpowiedź to JSON lub czysty HTML
+            }
+            throw new Error('Wystąpił błąd podczas wysyłania formularza.');
+        })
+        .then(data => {
+            // Tutaj możesz obsłużyć odświeżenie listy lub tabeli bez przeładowania strony
+            alert('Egzamin został dodany pomyślnie!');
+            form.reset();
+            location.reload(); // Opcjonalnie: przeładowanie, aby pobrać świeże dane z backendu
+        })
+        .catch(error => {
+            console.error('Błąd:', error);
+            alert('Nie udało się dodać egzaminu.');
+        });
+    });
+</script>
 {% endblock %}

@@ -29,9 +29,9 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('base/', views.base, name="base"),
 
-    path('api/randomporada', views.apiRandomPorada),
-    path('api/randomprzesad', views.apiRandomPrzesad),
-    path('api/przesady', views.apiPrzesady),
-    path('api/egzaminy', views.apiEgzaminy), #get i post w view
+    path('api/randomporada', views.apiRandomPorada, name="api/randomporada"),
+    path('api/randomprzesad', views.apiRandomPrzesad, name="api/randomprzesad"),
+    path('api/przesady', views.apiPrzesady, name="api/przesady"),
+    path('api/egzaminy', views.apiEgzaminy, name="api/egzaminy"), #get i post w view
     
 ]
