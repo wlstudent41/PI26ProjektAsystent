@@ -26,7 +26,7 @@
 {% block extra_js %}
 <script>
     document.getElementById('draw-advice-btn').addEventListener('click', function() {
-        fetch('/api/losowa-porada/')
+        fetch('/api/randomporada')
             .then(response => response.json())
             .then(data => {
                 document.getElementById('advice-text').innerText = data.tekst;

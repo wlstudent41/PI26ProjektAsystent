@@ -7,11 +7,20 @@ class Egzamin(models.Model):
     godzina=models.TimeField("Godzina egzaminu")
     miejsce=models.CharField(max_length=1000)
     typ=models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.przedmiot + "; " + self.typ + "; " + self.miejsce
 
 class Porada(models.Model):
     tekst=models.CharField(max_length=1000)
     kategoria=models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.tekst
+
 class Przesad(models.Model):
     tekst=models.CharField(max_length=1000)
     opis=models.CharField(max_length=1000,verbose_name="Opis pochodzenia")
+
+    def __str__(self):
+        return self.tekst
