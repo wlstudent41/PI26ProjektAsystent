@@ -15,5 +15,3 @@ class Porada(models.Model):
 class Przesad(models.Model):
     tekst=models.CharField(max_length=1000)
     opis=models.CharField(max_length=1000,verbose_name="Opis pochodzenia")
-
-

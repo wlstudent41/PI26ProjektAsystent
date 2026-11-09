@@ -20,8 +20,12 @@ from asystent_sesji import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('time/', views.current_datetime),
-    path('kalendarz/', views.kalendarz),
-    path('porada/', views.porada),
-    path('przesad/', views.przesad)
+    path('time/', views.current_datetime, name="time"),
+    path('kalendarz/', views.kalendarz, name="kalendarz"),
+    #porada nie bedzie w url jednak chyba
+    #path('porada/', views.porada),
+    path('przesad/', views.przesad, name="przesad"),
+
+    path('', views.index, name="index"),
+    path('base/', views.base, name="base"),
 ]

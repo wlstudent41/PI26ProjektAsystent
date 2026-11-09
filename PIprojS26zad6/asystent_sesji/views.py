@@ -12,10 +12,19 @@ def current_datetime(request):
     return HttpResponse(html)
 
 def kalendarz(request):
-    return HttpResponse("to jest kalendarz")
+    return render(request, "kalendarz.html")
+    #return HttpResponse("to jest kalendarz")
 
-def porada(request):
-    return HttpResponse("porada na egzamin")
+#def porada(request):
+    #return render(request, "")
+    #return HttpResponse("porada na egzamin")
 
 def przesad(request):
-    return HttpResponse("tak sie stanie ")
+    return render(request, "przesady.html")
+    #return HttpResponse("tak sie stanie ")
+
+def index(request):
+    return render(request, "index.html")
+
+def base(request):
+    return render(request, "base.html")
