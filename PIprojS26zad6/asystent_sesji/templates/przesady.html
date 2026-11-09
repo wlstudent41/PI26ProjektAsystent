@@ -16,8 +16,8 @@
         {% for przesad in przesady %}
         <div class="superstition-card">
             <h3>{{ przesad.tekst }}</h3>
-            {% if przesad.opis_pochodzenia %}
-                <p class="origin"><strong>Pochodzenie:</strong> {{ przesad.opis_pochodzenia }}</p>
+            {% if przesad.opis %}
+                <p class="origin"><strong>Pochodzenie:</strong> {{ przesad.opis }}</p>
             {% endif %}
         </div>
         {% empty %}
