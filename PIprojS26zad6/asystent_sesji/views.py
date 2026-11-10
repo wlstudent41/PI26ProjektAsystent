@@ -18,10 +18,7 @@ def current_datetime(request):
     return HttpResponse(html)
 
 def kalendarz(request):
-    context = {
-        'egzaminy' : models.Egzamin.objects.all().values(),
-    }
-    return render(request, "kalendarz.html", context)
+    return render(request, "kalendarz.html")
     #return HttpResponse("to jest kalendarz")
 
 #def porada(request):
@@ -85,6 +82,19 @@ def apiEgzaminy(request):
     print("REQUEST EGZAMINY: " + request.method)
     if request.method == "GET":
         egzaminObjects = models.Egzamin.objects.all()
+
+        #opcjonalne parametry do filtrowania egzaminow
+        filterPrzedmiot = request.GET.get("przedmiot", "").strip()
+        if filterPrzedmiot != "":
+            egzaminObjects = egzaminObjects.filter(przedmiot__icontains=filterPrzedmiot)
+        
+        filterMiejsce = request.GET.get("miejsce", "").strip()
+        if filterMiejsce != "":
+            egzaminObjects = egzaminObjects.filter(miejsce__icontains=filterMiejsce)
+
+        filterTyp = request.GET.get("typ", "").strip()
+        if filterTyp != "":
+            egzaminObjects = egzaminObjects.filter(typ__icontains=filterTyp)
 
         # - od najnowszego, bez - od najstarszego
         egzaminObjects = egzaminObjects.order_by("-data")
