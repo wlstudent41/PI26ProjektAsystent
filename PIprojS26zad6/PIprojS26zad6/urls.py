@@ -27,7 +27,6 @@ urlpatterns = [
     path('przesad/', views.przesad, name="przesad"),
 
     path('', views.index, name="index"),
-    path('base/', views.base, name="base"),
 
     path('api/randomporada', views.apiRandomPorada, name="api/randomporada"),
     path('api/randomprzesad', views.apiRandomPrzesad, name="api/randomprzesad"),

@@ -87,22 +87,6 @@
     const selectText = document.getElementById("filterText");
 
     const tableExams = document.getElementById("tableExams");
-
-    /*
-    {% for egzamin in egzaminy %}
-    <tr>
-        <td><strong>{{ egzamin.przedmiot }}</strong></td>
-        <td>{{ egzamin.data }}</td>
-        <td>{{ egzamin.godzina }}</td>
-        <td>{{ egzamin.miejsce }}</td>
-        <td><span class="type-tag {{ egzamin.typ|lower }}">{{ egzamin.typ }}</span></td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="5" class="no-data">Brak zaplanowanych egzaminów.</td>
-    </tr>
-    {% endfor %}
-    */
     let obecneDane = []
     const exportDelimiter = document.getElementById("exportDelimiter")
     function exportCsv() {

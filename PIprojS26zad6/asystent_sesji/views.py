@@ -21,22 +21,14 @@ def kalendarz(request):
     return render(request, "kalendarz.html")
     #return HttpResponse("to jest kalendarz")
 
-#def porada(request):
-    #return render(request, "")
-    #return HttpResponse("porada na egzamin")
-
 def przesad(request):
     context = {
         'przesady' : models.Przesad.objects.all().values(),
     }
     return render(request, "przesady.html", context)
-    #return HttpResponse("tak sie stanie ")
 
 def index(request):
     return render(request, "index.html")
-
-def base(request):
-    return render(request, "base.html")
 
 # zwraca jedna losowa porade
 def apiRandomPorada(request):
@@ -67,7 +59,7 @@ def apiRandomPrzesad(request):
 # zwraca wszystkie przesady
 def apiPrzesady(request):
     if request.method != "GET":
-        return JsonResponse(False)
+        return JsonResponse(False, safe=False)
 
     allPrzesady = models.Przesad.objects.all().values()
 

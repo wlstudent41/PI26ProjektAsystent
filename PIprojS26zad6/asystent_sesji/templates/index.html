@@ -12,19 +12,42 @@
     <h1>Witaj w Asystencie Sesji!</h1>
     <p>Potrzebujesz motywacji przed zbliżającym się egzaminem?</p>
     
-    <div class="card advice-card">
+    <div class="card advice-card" id="divPorada">
         <h2>Porada Motywacyjna</h2>
-        <p id="advice-text">{% if porada %}{{ porada.tekst }}{% else %}Kliknij przycisk poniżej, aby wylosować poradę!{% endif %}</p>
-        {% if porada.kategoria %}
-            <span id="advice-category" class="badge">{{ porada.kategoria }}</span>
-        {% endif %}
+        <p id="advice-text">Kliknij przycisk poniżej, aby wylosować poradę!</p>
         <button id="draw-advice-btn" class="btn">Losuj poradę</button>
     </div>
+
+    <div class="card advice-card" id="divPrzesad">
+        <h2>Przesąd na egzamin</h2>
+        <p id="textPrzesad">Kliknij przycisk poniżej, aby wylosować przesąd!</p>
+        <button id="buttonPrzesad" class="btn">Losuj przesąd</button>
+    </div>
+
 </section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+    document.getElementById("buttonPrzesad").addEventListener("click", function(e) {
+        fetch('/api/randomprzesad')
+            .then(response=>response.json())
+            .then(data=> {
+                document.getElementById("textPrzesad").innerText = data.tekst;
+                if (data.opis) {
+                    let catElem = document.getElementById("przesadOpis")
+                    if (!catElem) {
+                        catElem = document.createElement("span")
+                        catElem.id = "przesadOpis"
+                        catElem.className = "badge"
+                        document.getElementById("divPrzesad").appendChild(catElem);
+                    }
+
+                    catElem.innerText = data.opis
+                }
+            })
+            .catch(error => console.error("Błąd pobierania przesądu: ", error))
+    })
     document.getElementById('draw-advice-btn').addEventListener('click', function() {
         fetch('/api/randomporada')
             .then(response => response.json())
@@ -36,7 +59,7 @@
                         catElem = document.createElement('span');
                         catElem.id = 'advice-category';
                         catElem.className = 'badge';
-                        document.querySelector('.advice-card').appendChild(catElem);
+                        document.getElementById('divPorada').appendChild(catElem);
                     }
                     catElem.innerText = data.kategoria;
                 }
